@@ -1,0 +1,204 @@
+## Data Quality Notes
+- No null values in any column (confirmed via df.info())
+- Order Date and Ship Date are stored as text (str), not datetime — needs conversion
+- Ship Date years (2026+) are ~2 years after Order Date years (2024) — anomalous,
+  but Ship Date is not used anywhere in this project's KPIs or methodology, so noted
+  and not investigated further
+- No duplicate rows (df.duplicated().sum() = 0)
+- No duplicate Row IDs (df['Row ID'].duplicated().sum() = 0)
+- A small subset (94 of 10,194 rows, ~0.9%) shows Sales exactly equal to 2× Cost
+  (a flat 50% gross margin) — concentrated among the largest-value orders.
+  Not a dataset-wide pattern; does not indicate systemic data quality issues.
+
+
+## Data Quality Summary — Nassau Candy Distributor Dataset
+
+**Shape:** 10,194 rows × 18 columns
+
+**Completeness**
+- No null values in any column
+- No duplicate rows
+- No duplicate Row IDs
+
+**Data types**
+- Order Date and Ship Date are stored as text (str), not datetime — requires conversion (Day 2)
+
+**Date anomaly**
+- Ship Date years (~2026+) are ~2 years after Order Date years (~2024)
+- Ship Date is not used in any project KPI or deliverable — noted, not investigated further
+
+**Categorical columns**
+- Division: heavily imbalanced — Chocolate 96.6%, Other 3.0%, Sugar 0.4%
+  → Sugar division findings will be based on a small sample (n=40); flag as a
+    limitation in the final report
+- Region: clean, 4 categories, no issues
+- Ship Mode: clean, 4 categories, no issues
+
+**Numeric sanity checks (Sales, Units, Cost, Gross Profit)**
+- No zero or negative values in Sales, Units, or Cost
+- No rows where Cost > Sales (i.e., no guaranteed-loss transactions)
+- Sales, Cost, Gross Profit are internally consistent (Sales − Cost = Gross Profit, verified)
+- Sales distribution appears right-skewed (mean 13.9 vs median 10.8, max 260)
+  → worth a closer look at outliers during Day 2/3
+
+
+## Day 2 — Data Cleaning Summary
+
+**Datetime conversion**
+- Order Date and Ship Date converted from text to datetime64 (format: DD-MM-YYYY)
+
+**Outlier investigation (Sales)**
+- Sales distribution is right-skewed (mean 13.9 vs median 10.8)
+- Top-value orders inspected individually — confirmed to be legitimate large orders,
+  not data errors (Units, Cost, Gross Profit all scale consistently)
+- 94 of 10,194 rows (~0.9%) show Sales = 2× Cost exactly (flat 50% margin) —
+  concentrated among largest orders, not a dataset-wide pattern
+
+**Margin sanity check**
+- Quick margin (Gross Profit / Sales) check: mean 66.5%, range 7.7%–80%
+- Genuine variation present — confirms Margin Volatility KPI will have real signal
+
+**Output**
+- Cleaned dataset saved to data/cleaned_data.csv
+
+
+## Day 3 — KPI Calculation Summary
+
+Reloaded cleaned_data.csv — noted that datetime columns revert to string on CSV
+save/reload; reconverted Order Date and Ship Date each time.
+
+**KPIs calculated (per-row, added as columns):**
+- Gross Margin (%) = Gross Profit / Sales → mean 66.5%, range 7.7%-80%
+- Profit per Unit = Gross Profit / Units → mean $2.41, range $0.25-$10
+- Revenue Contribution = Sales / total Sales → verified sums to 1.0 across all rows
+- Profit Contribution = Gross Profit / total Gross Profit → verified sums to 1.0
+
+**KPI calculated (single summary value):**
+- Margin Volatility = std dev of average monthly Gross Margin = 0.0032 (~0.32 pts)
+  → Data spans 2024-2025 (24 months), not just one year — correction to earlier
+    assumption
+  → Margins are highly stable month-to-month — low volatility, consistent
+    pricing/cost discipline
+
+**Output:** data/kpi_data.csv
+
+
+## Day 4 — Product & Division-Level Profitability Findings
+
+### Product-Level Analysis
+
+**High-profit / high-margin (core products):**
+- All 5 Wonka Bar variants — $16.5K–$19.4K profit each, 65–71% margin
+- These drive the vast majority of total business profit and volume
+
+**Margin risk — systemic pattern, not isolated:**
+- Every non-Chocolate-division product except two negligible-volume items
+  (Hair Toffee, Everlasting Gobstopper — both under 20 total units sold)
+  sits below the Wonka Bar core margin range (65–71%)
+- Kazookles is the most severe case: 7.7% margin (lowest of all 15 products)
+  on $1,205.75 sales — clear pricing/cost review candidate
+- Lickable Wallpaper is the highest-volume case of this pattern: 50% margin
+  on $7,860 sales (2nd-highest non-Wonka product) — not a crisis, but
+  meaningfully below the healthy range and worth monitoring
+
+**Low-sales / low-profit (negligible, low priority):**
+- Fun Dip, Nerds, SweeTARTS — all under $65 total sales, minimal business impact
+
+### Division-Level Analysis
+
+| Division | Sales | Gross Profit | Gross Margin |
+|---|---|---|---|
+| Chocolate | $131,692.90 | $88,824.62 | 67.5% |
+| Sugar | $427.48 | $284.73 | 57.7% |
+| Other | $9,663.25 | $4,333.45 | 37.7% |
+
+- Chocolate: dominant in both volume and margin efficiency — core business
+- Other: lowest margin of all divisions (37.7%) and not statistically
+  negligible ($9,663 sales) — driven by Kazookles, Lickable Wallpaper,
+  Wonka Gum, Fizzy Lifting Drinks — recommend as primary target for
+  pricing/cost structure review
+- Sugar: smallest division (n=40, flagged in Day 1 EDA as low sample size)
+  but moderate margin (57.7%) — interpret cautiously
+  
+
+## Pareto (80/20) Analysis — Findings
+
+- 5 of 15 products (33%) account for 95.1% of total Gross Profit — all 5 are
+  Wonka Bar variants
+- The remaining 10 products (67% of the product line — all non-chocolate)
+  contribute under 5% of total profit combined
+- This exceeds a classic 80/20 split — profit concentration is more extreme
+  than typical, indicating significant over-dependency risk on a single
+  product family (Wonka Bar / Chocolate division)
+- Business implication: any disruption to Wonka Bar production, pricing, or
+  demand would materially threaten the vast majority of company profit, with
+  no meaningful buffer from the rest of the product portfolio.
+
+
+### Cost vs Sales Scatter — Findings
+
+- The 5 Wonka Bar products form a consistent trend line (~3.3-3.5x Sales-to-
+  Cost ratio), confirming their healthy, proportional margin behavior
+- Lickable Wallpaper sits visibly below this trend line: at its Cost level
+  (~3,900), the healthy-product trend would predict ~13,000-14,000 in Sales,
+  but it only reaches ~7,860 — visual confirmation of its comparatively weak
+  50% margin
+- Low-volume products (Kazookles, Wonka Gum, etc.) cluster too close to the
+  origin to visually separate on this scale — their margin issues (e.g.
+  Kazookles' 7.7%) are better captured by the Gross Margin metric directly
+  than by this scatter plot
+- Overall: Lickable Wallpaper and Kazookles are flagged as repricing/cost
+  renegotiation candidates; Wonka Bars require no cost structure changes
+
+
+## Day 5 — Streamlit Dashboard Foundation (Filters & Setup)
+
+**Built:**
+- Streamlit app structure (`app.py`) — learned core behavior: every user
+  interaction reruns the entire script top to bottom (no cell-by-cell memory
+  like Jupyter)
+- Loaded kpi_data.csv into the dashboard; reconverted Order Date to datetime
+  (same CSV-flattens-datetime issue encountered on Day 3)
+- Division filter (dropdown + live row count)
+- Margin threshold slider (0-1 range, filters orders by minimum Gross Margin)
+- Product search (case-insensitive partial match using .str.contains())
+- Date range selector (two-date picker, with a guard for the case where only
+  one date is selected mid-interaction)
+
+**Verification:**
+- Cross-checked the date range filter against an independent notebook
+  calculation — both returned 410 orders for Feb 1-Mar 31, 2024, confirming
+  the dashboard filter logic is accurate
+
+**Bonus finding — Order Volume Seasonality (not part of core KPI scope):**
+- Monthly order counts show a clear seasonal pattern — higher volume in Sep,
+  Nov, Dec across both years (likely holiday/gifting season for a candy
+  distributor)
+- Consistent year-over-year growth from 2024 to 2025 in nearly every month
+  (e.g., January: 148 → 256 orders; September: 568 → 831 orders)
+- Not required by current KPIs, but relevant context for demand planning;
+  worth a brief mention in the final report
+
+
+
+## Day 6 — Dashboard Build Summary
+
+**Built:** 4-tab Streamlit dashboard reusing Day 4 analysis:
+- Tab 1: Product Profitability Overview (table + margin leaderboard bar chart)
+- Tab 2: Division Performance (table + revenue/profit comparison + margin chart)
+- Tab 3: Cost vs Margin Diagnostics (interactive scatter, hover/color/size encoded)
+- Tab 4: Pareto Analysis (bar chart + cumulative % line, dual y-axis)
+
+**Technical issue encountered and resolved:**
+- Windows Smart App Control (a system security feature) blocked pyarrow's
+  compiled library, which Streamlit's st.dataframe() depends on internally
+- Root cause: Smart App Control was set to "On," which restricts execution
+  of unrecognized compiled binaries
+- Resolved by disabling Smart App Control (Windows Security → App & browser
+  control) and restarting — confirmed working, tables render correctly
+  with full interactive sorting/scrolling restored
+
+**No new analytical findings** — this phase focused on visualization and
+interactivity, not new calculations
+
+
