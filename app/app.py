@@ -1,14 +1,25 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+df = pd.read_csv(os.path.join(BASE_DIR, "..", "data", "kpi_data.csv"))
+
+theme_colors = ["#7B3F61", "#C97B84", "E8AOAO", "#F5C6C6", "#2E2E2E"]
 
 st.set_page_config(page_title="Nassau Candy Profitability", page_icon="🍬", layout="wide")
 
 st.title("Nassau Candy Distributor - Profitability Dashboard")
 
+
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Total Revenue", f"${df['Sales'].sum():,.0f}")
+col2.metric("Total Profit", f"${df['Gross Profit'].sum():,.0f}")
+col3.metric("Avg Margin", f"{df['Gross Margin'].mean()*100:.1f}%")
+col4.metric("Total Orders", f"{len(df):,}")
+
 tab1, tab2, tab3, tab4 = st.tabs(["📦 Product Overview", "🏭 Division Performance", "💰 Cost Diagnostics", "📊 Pareto Analysis"])
 
-df = pd.read_csv("../data/kpi_data.csv")
 df['Order Date'] = pd.to_datetime(df['Order Date'], format='%Y-%m-%d')
 
 with tab1:
@@ -28,7 +39,7 @@ with tab1:
     margin_leaderboard = product_summary.sort_values('Gross Margin', ascending=True)
 
     fig = px.bar(margin_leaderboard, x='Gross Margin', y=margin_leaderboard.index, orientation='h', 
-                title='Product Margin Leaderboard')
+                title='Product Margin Leaderboard', color_discrete_sequence=theme_colors)
     st.plotly_chart(fig, use_container_width=True)
 
 with tab2:
@@ -45,11 +56,13 @@ with tab2:
     col1, col2 = st.columns(2)
 
     with col1:
-        fig1 = px.bar(division_summary, x=division_summary.index, y=['Sales', 'Gross Profit'], barmode='group', title='Revenue vs Profit by Division')
+        fig1 = px.bar(division_summary, x=division_summary.index, y=['Sales', 'Gross Profit'], barmode='group', title='Revenue vs Profit by Division',
+        color_discrete_sequence=theme_colors)
         st.plotly_chart(fig1, use_container_width=True)
 
     with col2:
-        fig2 = px.bar(division_summary, x=division_summary.index, y='Gross Margin', title='Average Margin by Division')
+        fig2 = px.bar(division_summary, x=division_summary.index, y='Gross Margin', title='Average Margin by Division',
+        color_discrete_sequence=theme_colors)
         st.plotly_chart(fig2, use_container_width=True)
 
 with tab3:
@@ -63,7 +76,8 @@ with tab3:
 
     fig3 = px.scatter(product_summary_full, x='Cost', y='Sales', hover_name='Product Name',
                     color='Gross Margin', size='Sales',
-                    title='Cost vs Sales (colored by Margin, sized by Sales)')
+                    title='Cost vs Sales (colored by Margin, sized by Sales)',
+                    color_continuous_scale=["#F5C6C6", "#7B3F61"])
     st.plotly_chart(fig3, use_container_width=True)
     
 with tab4:
@@ -72,8 +86,9 @@ with tab4:
     pareto = df.groupby('Product Name')['Gross Profit'].sum().sort_values(ascending=False).reset_index()
     pareto['Cumulative %'] = pareto['Gross Profit'].cumsum() / pareto['Gross Profit'].sum() * 100
 
-    fig4 = px.bar(pareto, x='Product Name', y='Gross Profit', title='Pareto Chart - Profit Concentration')
-    fig4.add_scatter(x=pareto['Product Name'], y=pareto['Cumulative %'], mode='lines+markers', name='Cumulative %', yaxis='y2')
+    fig4 = px.bar(pareto, x='Product Name', y='Gross Profit', title='Pareto Chart - Profit Concentration',
+                  color_discrete_sequence=theme_colors)
+    fig4.add_scatter(x=pareto['Product Name'], y=pareto['Cumulative %'], mode='lines+markers', name='Cumulative %', yaxis='y2', line=dict(color="#2E2E2E"))
     fig4.update_layout(yaxis2=dict(title='Cumulative %', overlaying='y', side='right', range=[0, 105]))
 
     st.plotly_chart(fig4, use_container_width=True)
