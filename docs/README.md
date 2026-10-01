@@ -9,10 +9,10 @@ Overview
 Sales volume alone can hide whether a product is actually profitable. This project analyzes 10,194 order-level records (2024–2025) across 15 products and 3 divisions to identify which products genuinely drive profit, which carry hidden margin risk, and how concentrated the business's profitability really is.
 
 Key Findings
-Profit concentration: 5 of 15 products (all Wonka Bar chocolate variants) generate 95.1% of total gross profit — a concentration risk well beyond the classic 80/20 rule.
-Margin risk: Kazookles sells in meaningful volume but returns only a 7.7% gross margin — the lowest in the catalog. Lickable Wallpaper shows a similar, less severe pattern (50% margin on high sales volume).
-Division performance: The "Other" division underperforms on margin (37.7%) more than the smaller Sugar division (57.7%) — despite Sugar having far fewer records.
-Margin stability: Overall gross margin has stayed remarkably stable over two years (±0.32 percentage points month to month), indicating consistent pricing discipline.
+- Profit concentration: 5 of 15 products (all Wonka Bar chocolate variants) generate 95.1% of total gross profit — a concentration risk well beyond the classic 80/20 rule.
+- Margin risk: Kazookles sells in meaningful volume but returns only a 7.7% gross margin — the lowest in the catalog. Lickable Wallpaper shows a similar, less severe pattern (50% margin on high sales volume).
+- Division performance: The "Other" division underperforms on margin (37.7%) more than the smaller Sugar division (57.7%) — despite Sugar having far fewer records.
+- Margin stability: Overall gross margin has stayed remarkably stable over two years (±0.32 percentage points month to month), indicating consistent pricing discipline.
 
 Full methodology, data quality checks, and findings are documented in the research paper.
 
@@ -50,6 +50,7 @@ nassau-candy-analysis/
 └── requirements.txt
 
 How to Run
+
 bash
 # Clone the repo
 git clone https://github.com/VaishnaviH119/nassau-candy-analysis.git
