@@ -67,16 +67,16 @@ nassau-candy-analysis/
 └── requirements.txt
 
 
-How to Run
+## How to Run
 
 bash
-## Clone the repo
+#### Clone the repo
 
 git clone https://github.com/VaishnaviH119/nassau-candy-analysis.git
 
 cd nassau-candy-analysis
 
-## Set up environment
+#### Set up environment
 
 python -m venv venv
 
@@ -89,7 +89,6 @@ pip install -r requirements.txt
 
 ## Run the dashboard
 cd app
-
 streamlit run app.py
 
 ## Methodology
