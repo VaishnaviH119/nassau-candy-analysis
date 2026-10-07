@@ -25,9 +25,14 @@ An interactive Streamlit dashboard lets stakeholders explore the findings direct
 
 Filters: Division, margin threshold slider, product search, date range
 
-Tabs: 1) Product Profitability Overview 
+Tabs: 
+      
+      1) Product Profitability Overview
+      
       2) Division Performance 
+      
       3) Cost vs. Margin Diagnostics 
+      
       4) Pareto (Profit Concentration) Analysis
       
 Summary statistics: Descriptive statistics (count, mean, std, min/max) for Sales, Units, Cost, and Gross Profit, shown at the end of the dashboard
@@ -36,16 +41,16 @@ Summary statistics: Descriptive statistics (count, mean, std, min/max) for Sales
 
 ## Tech Stack
 
-      Analysis: Python, pandas, numpy
+- Analysis: Python, pandas, numpy
 
-      Visualization: matplotlib, seaborn, plotly
+- Visualization: matplotlib, seaborn, plotly
 
-      Dashboard: Streamlit
+- Dashboard: Streamlit
 
-      Environment: Jupyter (VS Code)
+- Environment: Jupyter (VS Code)
 
 ## Project Structure
-'''text
+```text
 nassau-candy-analysis/
 │
 ├── app/
@@ -64,32 +69,32 @@ nassau-candy-analysis/
 │
 ├── requirements.txt                   # Python dependencies
 └── README.md                          # Project documentation
-'''
+```
 
 ## How to Run
 
 bash
 #### Clone the repo
 
-git clone https://github.com/VaishnaviH119/nassau-candy-analysis.git
-
-cd nassau-candy-analysis
+      git clone https://github.com/VaishnaviH119/nassau-candy-analysis.git
+      
+      cd nassau-candy-analysis
 
 ### Set up environment
 
-python -m venv venv
-
-venv\Scripts\activate                    # Windows
-
-source venv/bin/activate                 # Mac/Linux
-
-pip install -r requirements.txt
+      python -m venv venv
+      
+      venv\Scripts\activate                    # Windows
+      
+      source venv/bin/activate                 # Mac/Linux
+      
+      pip install -r requirements.txt
 
 
 ## Run the dashboard
-cd app
-
-streamlit run app.py
+      cd app
+      
+      streamlit run app.py
 
 ## Methodology
 
