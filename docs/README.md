@@ -37,34 +37,33 @@ Summary statistics: Descriptive statistics (count, mean, std, min/max) for Sales
 ## Tech Stack
 
 Analysis: Python, pandas, numpy
+
 Visualization: matplotlib, seaborn, plotly
+
 Dashboard: Streamlit
+
 Environment: Jupyter (VS Code)
 
 ## Project Structure
 
 nassau-candy-analysis/
-
+│
 ├── app/
-
-│   └── app.py              # Streamlit dashboard
+│   └── app.py                         # Streamlit dashboard
+│
 ├── data/
-
-│   ├── Nassau_Candy_Distributor.csv # raw data
-
-│   └── kpi_data.csv                   # cleaned + KPI-enriched data
-
+│   ├── Nassau_Candy_Distributor.csv   # Raw dataset
+│   └── kpi_data.csv                   # Cleaned and KPI-enriched dataset
+│
 ├── notebooks/
-
-│   └── 01_eda.ipynb        # EDA, cleaning, KPI engineering, analysis
-
+│   └── 01_eda.ipynb                   # EDA, data cleaning, KPI engineering & analysis
+│
 ├── docs/
-
-│   ├── Research_Paper.docx
-
-│   └── Executive_Summary.docx
-
-└── requirements.txt
+│   ├── Research_Paper.docx            # Detailed project research paper
+│   └── Executive_Summary.docx         # Executive-level project summary
+│
+├── requirements.txt                   # Python dependencies
+└── README.md                          # Project documentation
 
 
 ## How to Run
