@@ -114,7 +114,12 @@ Executive Summary — condensed findings for non-technical stakeholders
 
 Interactive dashboard (this repo)
 
+** Project Walkthrough Video ** 
+
+[Watch on Loom] https://www.loom.com/share/a77296a7f50444cdb655f47d62ae1203
 
 ## Author
 
 Vaishnavi N. Helwatkar — Data Analysis Project
+
+
