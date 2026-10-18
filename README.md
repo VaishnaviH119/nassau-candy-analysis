@@ -39,12 +39,12 @@ Tabs:
 Summary statistics: Descriptive statistics (count, mean, std, min/max) for Sales, Units, Cost, and Gross Profit, shown at the end of the dashboard
 
 ## Dashboard preview
-![Dashboard Overview](Screenshots\overview.png)
-![Pareto Analysis](Screenshots\pareto.png)
-![Division Performance](Screenshots\division.png)
-![Margin Risk Alert](Screenshots\risk-alert.png)
-![Quick Specific Product Stats](Screenshots\productStats.png)
-![Specific Product Overview](Screenshots\Single-Product-Overview.png)
+![Dashboard Overview](Screenshots/overview.png)
+![Pareto Analysis](Screenshots/pareto.png)
+![Division Performance](Screenshots/division.png)
+![Margin Risk Alert](Screenshots/risk-alert.png)
+![Quick Specific Product Stats](Screenshots/productStats.png)
+![Specific Product Overview](Screenshots/Single-Product-Overview.png)
 
 ## Tech Stack
 
