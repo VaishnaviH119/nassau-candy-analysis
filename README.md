@@ -1,6 +1,7 @@
 # Nassau Candy Distributor — Profitability & Margin Analysis
 
 🔗 Live Dashboard: dataanalytics1234.streamlit.app 
+
 📂 Repository: github.com/VaishnaviH119/nassau-candy-analysis
 
 An end-to-end data analysis project examining product-line profitability and margin performance for a multi-division candy distributor, from raw transactional data to an interactive dashboard.
@@ -32,7 +33,13 @@ Tabs: Product Profitability Overview
       
 Summary statistics: Descriptive statistics (count, mean, std, min/max) for Sales, Units, Cost, and Gross Profit, shown at the end of the dashboard
 
-(Add a dashboard screenshot here)
+## Dashboard preview
+![Dashboard Overview](Screenshots\overview.png)
+![Pareto Analysis](Screenshots\pareto.png)
+![Division Performance](Screenshots\division.png)
+![Margin Risk Alert](Screenshots\risk-alert.png)
+![Quick Specific Product Stats](Screenshots\productStats.png)
+![Specific Product Overview](Screenshots\Single-Product-Overview.png)
 
 ## Tech Stack
 
