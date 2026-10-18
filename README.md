@@ -26,10 +26,15 @@ An interactive Streamlit dashboard lets stakeholders explore the findings direct
 
 Filters: Division, margin threshold slider, product search, date range
 
-Tabs: Product Profitability Overview 
-      Division Performance 
-      Cost vs. Margin Diagnostics 
-      Pareto (Profit Concentration) Analysis
+Tabs: 
+      
+      1) Product Profitability Overview
+      
+      2) Division Performance 
+      
+      3) Cost vs. Margin Diagnostics 
+      
+      4) Pareto (Profit Concentration) Analysis
       
 Summary statistics: Descriptive statistics (count, mean, std, min/max) for Sales, Units, Cost, and Gross Profit, shown at the end of the dashboard
 
@@ -43,77 +48,84 @@ Summary statistics: Descriptive statistics (count, mean, std, min/max) for Sales
 
 ## Tech Stack
 
-Analysis: Python, pandas, numpy
-Visualization: matplotlib, seaborn, plotly
-Dashboard: Streamlit
-Environment: Jupyter (VS Code)
+- Analysis: Python, pandas, numpy
+
+- Visualization: matplotlib, seaborn, plotly
+
+- Dashboard: Streamlit
+
+- Environment: Jupyter (VS Code)
 
 ## Project Structure
-
+```text
 nassau-candy-analysis/
-
+│
 ├── app/
-
-│   └── app.py              # Streamlit dashboard
+│   └── app.py                         # Streamlit dashboard
+│
 ├── data/
-
-│   ├── Nassau_Candy_Distributor.csv # raw data
-
-│   └── kpi_data.csv                   # cleaned + KPI-enriched data
-
+│   ├── Nassau_Candy_Distributor.csv   # Raw dataset
+│   └── kpi_data.csv                   # Cleaned and KPI-enriched dataset
+│
 ├── notebooks/
-
-│   └── 01_eda.ipynb        # EDA, cleaning, KPI engineering, analysis
-
+│   └── 01_eda.ipynb                   # EDA, data cleaning, KPI engineering & analysis
+│
 ├── docs/
-
-│   ├── Research_Paper.docx
-
-│   └── Executive_Summary.docx
-
-└── requirements.txt
-
+│   ├── Research_Paper.docx            # Detailed project research paper
+│   └── Executive_Summary.docx         # Executive-level project summary
+│
+├── requirements.txt                   # Python dependencies
+└── README.md                          # Project documentation
+```
 
 ## How to Run
 
 bash
 #### Clone the repo
 
-git clone https://github.com/VaishnaviH119/nassau-candy-analysis.git
+      git clone https://github.com/VaishnaviH119/nassau-candy-analysis.git
+      
+      cd nassau-candy-analysis
 
-cd nassau-candy-analysis
+### Set up environment
 
-#### Set up environment
-
-python -m venv venv
-
-venv\Scripts\activate        # Windows
-
-source venv/bin/activate     # Mac/Linux
-
-pip install -r requirements.txt
+      python -m venv venv
+      
+      venv\Scripts\activate                    # Windows
+      
+      source venv/bin/activate                 # Mac/Linux
+      
+      pip install -r requirements.txt
 
 
 ## Run the dashboard
-cd app
-streamlit run app.py
+      cd app
+      
+      streamlit run app.py
 
 ## Methodology
 
-Data cleaning & validation — structural checks, datetime conversion, outlier investigation
-KPI engineering — Gross Margin, Profit per Unit, Revenue Contribution, Profit Contribution, Margin Volatility
-Product & division analysis — profitability ranking, cross-division comparison
-Pareto analysis — profit concentration across the product catalog
-Cost structure diagnostics — cost-vs-sales deviation to flag repricing candidates
-Dashboard deployment — interactive Streamlit app for self-service exploration
+1) Data cleaning & validation — structural checks, datetime conversion, outlier investigation
+2) KPI engineering — Gross Margin, Profit per Unit, Revenue Contribution, Profit Contribution, Margin Volatility
+3) Product & division analysis — profitability ranking, cross-division comparison
+4) Pareto analysis — profit concentration across the product catalog
+5) Cost structure diagnostics — cost-vs-sales deviation to flag repricing candidates
+6) Dashboard deployment — interactive Streamlit app for self-service exploration
 
 ## Deliverables
 
-Research Paper — full methodology and findings
-Executive Summary — condensed findings for non-technical stakeholders
-Interactive dashboard (this repo)
+* Research Paper — full methodology and findings
 
+* Executive Summary — condensed findings for non-technical stakeholders
+
+* Interactive dashboard (this repo)
+
+## Project Walkthrough Video
+
+[Watch on Loom] https://www.loom.com/share/a77296a7f50444cdb655f47d62ae1203
 
 ## Author
 
-Vaishnavi N. Helwatkar— Data Analysis Project
+Vaishnavi N. Helwatkar — Data Analysis Project
+
+
