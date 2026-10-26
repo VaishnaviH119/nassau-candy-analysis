@@ -1,0 +1,15 @@
+name: Keep Streamlit app awake
+on:
+  schedule:
+    - cron: '0 */8 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: gpenessot/streamlit-keep-alive@v1
+        with:
+          app-urls: |
+            https://dataanalytics1234.streamlit.app
